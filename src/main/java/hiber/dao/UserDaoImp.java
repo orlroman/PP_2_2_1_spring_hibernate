@@ -15,14 +15,12 @@ public class UserDaoImp implements UserDao {
    @Autowired
    private SessionFactory sessionFactory;
    
-   @Transactional
    @Override
    public void add(User user) {
       sessionFactory.getCurrentSession().save(user);
    }
 
    @Override
-   @Transactional(readOnly = true)
    @SuppressWarnings("unchecked")
    public List<User> listUsers() {
       TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
