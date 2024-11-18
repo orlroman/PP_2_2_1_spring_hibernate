@@ -22,10 +22,14 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan(value = "hiber")
 public class AppConfig {
-
+   
+   private final Environment env;
+   
    @Autowired
-   private Environment env;
-
+   public AppConfig(Environment env) {
+      this.env = env;
+   }
+   
    @Bean
    public DataSource getDataSource() {
       DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -44,6 +48,7 @@ public class AppConfig {
       Properties props = new Properties();
       props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
       props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+      props.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
 
       factoryBean.setHibernateProperties(props);
       factoryBean.setAnnotatedClasses(User.class, Car.class);
